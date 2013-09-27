@@ -51,8 +51,11 @@
 
 
     (* Part 1: <INSERT YOUR LIST FUNCTIONS, INCLUDING normalize, HERE> *)
-
-
+	fun normalize nil = nil
+	  | normalize [0] = nil
+	  | normalize (x::xs) = x::(normalize (normalize xs));
+	  
+	  
     (* Part 2: <WRITE CODE FOR isOdd, negate, sum, diff, prod, quo, rem 
                 and compare HERE> *)
 
@@ -63,6 +66,7 @@
     (* Part 5: <WRITE CODE FOR THE CONVERSION FUNCTIONS HERE>
                fromString is provided for you.                *)
 
+			   (*
     fun fromString s =
         let
             val decimalRadix = fromInt 10;
@@ -97,3 +101,4 @@
                else fs Zero digits
         end;
 
+*)
