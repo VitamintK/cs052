@@ -55,7 +55,36 @@
 	  | normalize [0] = nil
 	  | normalize (x::xs) = x::(normalize (normalize xs));
 	  
-	  
+	fun addAsLists carry nil nil = if carry = 0 then [] else [carry]
+      | addAsLists carry lft nil = addAsLists carry lft [0]
+      | addAsLists carry nil rht = addAsLists carry [0] rht
+      | addAsLists carry (x::xs) (y::ys) = 
+        let
+            val s = x+y+carry
+        in
+            if s<10
+            then s::(addAsLists 0 xs ys)
+            else (s-10)::(addAsLists 1 xs ys)
+        end; 
+		
+	local
+		fun subtractAsListsaux b nil nil = if b=0 then [] else [~b]
+		  | subtractAsListsaux b lft nil = subtractAsListsaux b lft [0]
+		  | subtractAsListsaux b nil rht = subtractAsListsaux b [0] rht
+		  | subtractAsListsaux b (l::ls) (r::rs) =
+			let
+				val d = l - b - r;
+			in 
+				if 0 <= d
+				then d:: (subtractAsListsaux 0 ls rs)
+				else (d+10) :: (subtractAsListsaux 1 ls rs)
+			end;
+	in
+		fun subtractAsLists b xl yl = normalize(subtractAsListsaux b xl yl);
+	end;
+		
+
+		
     (* Part 2: <WRITE CODE FOR isOdd, negate, sum, diff, prod, quo, rem 
                 and compare HERE> *)
 
